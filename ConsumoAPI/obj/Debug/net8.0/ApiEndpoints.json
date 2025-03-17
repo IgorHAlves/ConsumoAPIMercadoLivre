@@ -1,0 +1,12 @@
+[
+  {
+    "ContainingType": "ConsumoAPI.Controllers.CaracteristicaController",
+    "Method": "Caracteristicas",
+    "RelativePath": "caracteristica",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]

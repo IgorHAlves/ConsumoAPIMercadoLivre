@@ -1,0 +1,22 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "ConsumoAPI",
+    "version": "1.0"
+  },
+  "paths": {
+    "/caracteristica": {
+      "get": {
+        "tags": [
+          "Caracteristica"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": { }
+}
