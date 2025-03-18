@@ -24,17 +24,24 @@ namespace ConsumoAPI.Controllers
 
                     var json = JsonDocument.Parse(retornoApi);
 
-                    var result = json.RootElement.GetProperty("results").EnumerateArray().First();
+                    var result = json.RootElement.EnumerateArray().ToArray();
 
                     List<Caracteristica> caracteristicas = new List<Caracteristica>();
 
-                    //foreach (var item in result.)
-                    //{
-                    //    caracteristicas.Add(new Caracteristica
-                    //    {
+                    int incrementoId = 0;
 
-                    //    });
-                    //}
+                    foreach (var item in result)
+                    {
+                        caracteristicas.Add(new Caracteristica
+                        {
+                            Id = incrementoId++,
+                            IdMercadoLivre = item.GetProperty("id").GetString(),
+                            Name = item.GetProperty("name").GetString()
+
+                        });
+                    }
+
+                    string stop = "a";
                 }
             }
             catch (Exception)
