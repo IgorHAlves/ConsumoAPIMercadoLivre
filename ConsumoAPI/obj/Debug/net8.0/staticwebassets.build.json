@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "CS4aGKny1YqW5AxjUWagP0/OBkAsD1AQ79D83G1CdjE=",
+  "Hash": "VLfCkZXcx803evkvUWxKaDQhJrmxf+/cFYc1LoE/boM=",
   "Source": "ConsumoAPI",
   "BasePath": "_content/ConsumoAPI",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }

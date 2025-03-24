@@ -40,8 +40,7 @@ namespace ConsumoAPI.Controllers
 
                         });
                     }
-
-                    string stop = "a";
+                    return Ok(caracteristicas);
                 }
             }
             catch (Exception)
