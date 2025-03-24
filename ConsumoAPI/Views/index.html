@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API</title>
+  </head>
+  <body>
+    <div id="card"></div>
+    <script>
+      async function GetCaracteristica() {
+        let response = await fetch("http://localhost:5174/caracteristica"); //trocar para a porta fornecida pela api
+
+        let data = await response.json();
+
+        data.forEach((caracteristica) => {
+          let card = document.getElementById("card");
+          card.className = "card";
+          card.innerHTML += `
+              <p>${caracteristica.name}</p>
+              `;
+        });
+        console.log(data);
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        GetCaracteristica();
+      });
+    </script>
+  </body>
+</html>
