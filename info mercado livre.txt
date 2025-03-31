@@ -1,0 +1,58 @@
+ID APLICATIVO: 6450959655833783
+CHAVE SECRETA: tR5yEzs3M9sbVbd5X79EXeZneVHfnUMW
+URI: https://www.google.com.br
+
+code=TG-67ea90254480e100015ac65e-268692955
+
+pegar o code:
+
+link para primeira autorização no dispositivo (armazenar para utilizar na apresentação em outro pc) ********pegar o refresh code
+https://auth.mercadolivre.com.br/authorization?response_type=code&client_id=6450959655833783&redirect_uri=https://www.google.com.br
+
+
+trocar o code por um refresh token:
+
+CURL USADO:
+
+curl -X POST \
+-H 'accept: application/json' \
+-H 'content-type: application/x-www-form-urlencoded' \
+'https://api.mercadolibre.com/oauth/token' \
+-d 'grant_type=authorization_code' \
+-d 'client_id=$APP_ID' \
+-d 'client_secret=$SECRET_KEY' \
+-d 'code=$SERVER_GENERATED_AUTHORIZATION_CODE' \
+-d 'redirect_uri=$REDIRECT_URI' \
+-d 'code_verifier=$CODE_VERIFIER' 
+
+
+
+
+trocar o refresh token por um access token
+CURL USADO:
+
+curl -X POST \
+-H 'accept: application/json' \
+-H 'content-type: application/x-www-form-urlencoded' \
+'https://api.mercadolibre.com/oauth/token' \
+-d 'grant_type=refresh_token' \
+-d 'client_id=$APP_ID' \
+-d 'client_secret=$SECRET_KEY' \
+-d 'refresh_token=$REFRESH_TOKEN'
+
+
+exemplo de access token
+APP_USR-6450959655833783-031109-30061f936ead8fecd948a81011482f60-268692955
+
+Endpoint para trazer produtos mais vendidos de uma categoria específica
+https://api.mercadolibre.com/highlights/MLB/category/MLB432825
+
+Endpoint para trazer todas as categorias:
+https://api.mercadolibre.com/sites/MLB/categories
+
+Endpoint para trazer informações desses produtos
+curl -X GET "https://api.mercadolibre.com/items?ids=MLB123456,MLB789012"
+
+
+o que fazer:
+Para cada categoria, acessar o endpoint de trazer produto mais vendido por categoria e armazenar essa informação
