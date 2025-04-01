@@ -1,0 +1,87 @@
+using System.Net.Http.Headers;
+using System.Text.Json;
+
+class Program
+{
+    static async Task Main(string[] args)
+    {
+        // URL da API
+        const string url = "https://api.mercadolibre.com/oauth/token";
+
+        // Body para pegar o refresh token utilizando o code
+        var dataRefreshToken = new Dictionary<string, string>
+        {
+            { "grant_type", "authorization_code" },
+            { "client_id", "6450959655833783" },
+            { "client_secret", "tR5yEzs3M9sbVbd5X79EXeZneVHfnUMW" },
+            { "code", "TG-67eb25eb2b603900010bc8ca-2272913965" }, //code
+            { "redirect_uri", "https://www.google.com.br" },
+            { "code_verifier", "$CODE_VERIFIER" }
+        };
+
+        HttpClient client = new HttpClient();
+
+        // Headers
+        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+        // Codificando formato application/x-www-form-urlencoded
+        var content = new FormUrlEncodedContent(dataRefreshToken);
+
+        try
+        {
+            // Enviando a requisição POST
+            HttpResponseMessage responseRefreshToken = await client.PostAsync(url, content);
+
+            // Verificando se a resposta foi bem-sucedida
+            if (responseRefreshToken.IsSuccessStatusCode)
+            {
+                // Lendo a resposta
+                string retornoApiRefreshToken = await responseRefreshToken.Content.ReadAsStringAsync();
+
+                //Transformando resposta em um objeto
+                var responseJsonRefreshToken = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(retornoApiRefreshToken);
+
+                // Extraindo o refresh_token
+                string refreshToken = responseJsonRefreshToken["refresh_token"].GetString().Trim();
+                Console.WriteLine("Refresh Token: " + refreshToken);
+
+                // Body para pegar o access token utilizando o code
+                var dataAccessToken = new Dictionary<string, string>
+                    {
+                        { "grant_type", "refresh_token" },
+                        { "client_id", "6450959655833783" },
+                        { "client_secret", "tR5yEzs3M9sbVbd5X79EXeZneVHfnUMW" },
+                        { "refresh_token", "TG-67eb25faf65d9a0001b0f9ce-2272913965" } //refresh token
+                    };
+
+                content = new FormUrlEncodedContent(dataAccessToken);
+
+                // Enviando a requisição POST
+                HttpResponseMessage responseAccessToken = await client.PostAsync(url, content);
+
+                if (responseAccessToken.IsSuccessStatusCode)
+                {
+                    // Lendo a resposta
+                    string retornoApiAccessToken = await responseRefreshToken.Content.ReadAsStringAsync();
+
+                    //Transformando resposta em um objeto
+                    var responseJsonAccessToken = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(retornoApiAccessToken);
+
+                    // Extraindo o refresh_token
+                    string accessToken = responseJsonRefreshToken["access_token"].GetString();
+
+                    Console.WriteLine("Access Token: " + accessToken);
+                }
+                else
+                {
+                    Console.WriteLine("Erro: " + responseAccessToken.StatusCode);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Erro ao fazer a requisição: " + ex.Message);
+        }
+
+    }
+}
